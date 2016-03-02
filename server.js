@@ -16,7 +16,7 @@
 
   _port = (_ref1 = process.env.OPENSHIFT_NODEJS_PORT) != null ? _ref1 : 8080;
 
-  app.listen(_ipAddress, _port, function() {
+  app.listen(_port, _ipAddress, function() {
     return console.log("Node server started");
   });
 

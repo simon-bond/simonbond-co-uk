@@ -32,6 +32,6 @@ app.get '/', (req, res) ->
 _ipAddress = process.env.OPENSHIFT_NODEJS_IP ? '127.0.0.1'
 _port = process.env.OPENSHIFT_NODEJS_PORT ? 8080
 
-app.listen _ipAddress, _port, ->
+app.listen _port, _ipAddress, ->
         console.log "Node server started"
 
