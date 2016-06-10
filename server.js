@@ -33,6 +33,12 @@
   _stages = ["Singles", "Minimus", "Doubles", "Doubles and Minor", "Minor", "Triples", "Triples and Major", "Major", "Major and Caters", "Caters", "Caters and Royal", "Royal", "Cinques", "Cinques and Maximus", "Maximus", "Sextuples", "Fourteen", "Septuples", "Sixteen"];
 
   app.get('/', function(req, res) {
+    return res.render('index');
+  });
+
+  app.use('/static', Express["static"]('static'));
+
+  app.get('/ringing', function(req, res) {
     var selector;
     selector = {};
     return Db.collections.lengths.find(selector).sort({
@@ -49,7 +55,7 @@
         }
         return length;
       });
-      return res.render('index', {
+      return res.render('ringing', {
         performances: lengths
       });
     });

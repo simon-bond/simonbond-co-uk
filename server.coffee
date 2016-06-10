@@ -40,6 +40,11 @@ _stages = [
 ]
 
 app.get '/', (req, res) ->
+    return res.render 'index'
+
+app.use '/static', Express.static('static')
+
+app.get '/ringing', (req, res) ->
     selector = {}
     Db.collections.lengths.find(selector).sort(date: 1).toArray (err, lengths) ->
         if err? then return res.status(500).send(err)
@@ -48,7 +53,7 @@ app.get '/', (req, res) ->
             if lengths.Footnotes?
                 lengths.formatFootnotes = lengths.Footnotes.replace '\n', '<br>'
             return length
-        res.render 'index', {performances: lengths}
+        res.render 'ringing', {performances: lengths}
 
 app.get '/stats', (req, res) ->
     selector = {}
