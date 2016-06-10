@@ -1,0 +1,42 @@
+doctype html
+html(lang="en")
+    head
+        title Ringing Records
+        link(rel="stylesheet",href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
+
+    body
+        table
+            tr
+                td: b METHODS
+                td: b LOCATIONS
+                td: b RINGERS
+                td: b CONDUCTORS
+            tr
+                td(valign="top")
+                    br
+                    each stage in stages
+                        if Object.keys(methods[stage]).length > 0
+                            b #{stage} (#{Object.keys(methods[stage]).length})
+                            br
+                            each method in methods[stage]
+                                span #{method.count} #{method.method}
+                                br
+                            br
+
+                td(valign="top")
+                    br
+                    each tower in towers
+                        span #{tower.count} #{tower.displayName}
+                        br
+
+                td(valign="top")
+                    br
+                    each ringer in ringers
+                        span #{ringer.count} #{ringer.name}
+                        br
+
+                td(valign="top")
+                    br
+                    each conductor in conductors
+                        span #{conductor.count} #{conductor.name}
+                        br
