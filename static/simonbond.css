@@ -1,20 +1,20 @@
-.social {
+.buttonrow {
     margin: 0;
     padding: 0;
 }
 
-.social ul {
+.buttonrow ul {
     margin: 0;
     padding: 5px;
 }
 
-.social ul li {
+.buttonrow ul li {
     margin: 5px;
     list-style: none outside none;
     display: inline-block;
 }
 
-.social i {
+.buttonrow i {
     width: 40px;
     height: 40px;
     color: #FFF;
@@ -33,7 +33,7 @@
     -ms-transition: all ease 0.3s;
 }
 
-.social i:hover {
+.buttonrow i:hover {
     color: #FFF;
     text-decoration: none;
     transition: all ease 0.3s;
@@ -43,22 +43,43 @@
     -ms-transition: all ease 0.3s;
 }
 
-.social .fa-facebook-square:hover {
+.buttonrow .fa-facebook-square:hover {
     background: #4060A5;
 }
 
-.social .fa-twitter-square:hover {
+.buttonrow .fa-twitter-square:hover {
     background: #00ABE3;
 }
 
-.social .fa-linkedin-square:hover {
+.buttonrow .fa-linkedin-square:hover {
     background: #0094BC;
 }
 
-.social .fa-youtube-square:hover {
+.buttonrow .fa-youtube-square:hover {
     background: #FF1F25;
 }
 
-.social .fa-lastfm-square:hover {
+.buttonrow .fa-lastfm-square:hover {
     background: #B90000;
+}
+
+.buttonrow .fa-lastfm-square:hover {
+    background: #B90000;
+}
+
+.buttonrow .fa-bell:hover {
+    background: #EECC00;
+}
+
+.buttonrow .fa-music:hover {
+    background: #DDDDFF;
+}
+
+
+hr {
+    width: 30%;
+}
+
+h2.sabh2 {
+    margin-top: 10px;
 }
