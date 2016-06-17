@@ -45,15 +45,41 @@ app.get '/', (req, res) ->
 app.use '/static', Express.static('static')
 
 app.get '/ringing', (req, res) ->
+
     selector = {}
+    for key, val of req.query when val.length
+        switch key
+            when 'year'
+                selector.date =
+                    $gte: new Date(parseInt(val), 0, 1)
+                    $lt: new Date(parseInt(val)+1, 0, 1)
+            when 'length'
+                if val is 'quarter'
+                    selector.Length = $lt: 5000
+                if val is 'peal'
+                    selector.Length = $gte: 5000
+
+
     Db.collections.lengths.find(selector).sort(date: 1).toArray (err, lengths) ->
         if err? then return res.status(500).send(err)
+
+        totalRows = countQ = countP = 0
+
         mappedLengths = lengths.map (length) ->
+            totalRows += length.Length
+            if length.Length > 4999 then countP++ else countQ++
             length.formatDate = Moment(length.date).format 'ddd D MMMM YYYY'
             if lengths.Footnotes?
                 lengths.formatFootnotes = lengths.Footnotes.replace '\n', '<br>'
             return length
-        res.render 'ringing', {performances: lengths}
+        context = req.query # pass it back for display in the filters
+        context.performances = lengths
+        context.totalRows = totalRows
+        context.countP = countP
+        context.countQ = countQ
+        context.years = [new Date().getFullYear()..2002]
+        res.render 'ringing', context
+
 
 app.get '/stats', (req, res) ->
     selector = {}

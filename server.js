@@ -39,25 +39,65 @@
   app.use('/static', Express["static"]('static'));
 
   app.get('/ringing', function(req, res) {
-    var selector;
+    var key, selector, val, _ref2;
     selector = {};
+    _ref2 = req.query;
+    for (key in _ref2) {
+      val = _ref2[key];
+      if (val.length) {
+        switch (key) {
+          case 'year':
+            selector.date = {
+              $gte: new Date(parseInt(val), 0, 1),
+              $lt: new Date(parseInt(val) + 1, 0, 1)
+            };
+            break;
+          case 'length':
+            if (val === 'quarter') {
+              selector.Length = {
+                $lt: 5000
+              };
+            }
+            if (val === 'peal') {
+              selector.Length = {
+                $gte: 5000
+              };
+            }
+        }
+      }
+    }
     return Db.collections.lengths.find(selector).sort({
       date: 1
     }).toArray(function(err, lengths) {
-      var mappedLengths;
+      var context, countP, countQ, mappedLengths, totalRows, _i, _ref3, _results;
       if (err != null) {
         return res.status(500).send(err);
       }
+      totalRows = countQ = countP = 0;
       mappedLengths = lengths.map(function(length) {
+        totalRows += length.Length;
+        if (length.Length > 4999) {
+          countP++;
+        } else {
+          countQ++;
+        }
         length.formatDate = Moment(length.date).format('ddd D MMMM YYYY');
         if (lengths.Footnotes != null) {
           lengths.formatFootnotes = lengths.Footnotes.replace('\n', '<br>');
         }
         return length;
       });
-      return res.render('ringing', {
-        performances: lengths
-      });
+      context = req.query;
+      context.performances = lengths;
+      context.totalRows = totalRows;
+      context.countP = countP;
+      context.countQ = countQ;
+      context.years = (function() {
+        _results = [];
+        for (var _i = _ref3 = new Date().getFullYear(); _ref3 <= 2002 ? _i <= 2002 : _i >= 2002; _ref3 <= 2002 ? _i++ : _i--){ _results.push(_i); }
+        return _results;
+      }).apply(this);
+      return res.render('ringing', context);
     });
   });
 
