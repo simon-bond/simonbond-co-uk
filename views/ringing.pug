@@ -11,7 +11,7 @@ html(lang="en")
         link(rel="stylesheet",href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
 
     body
-        h1.text-center Simon Bond's Ringing Records
+        include ./header
         .well(style="margin: 15px")
             span Total #{totalRows} changes in
             if countP
@@ -44,7 +44,7 @@ html(lang="en")
                 - var place2 = location.Place2 ? location.Place2 + ', ' : ''
                 b #{location.Place.toUpperCase()}, #{place2}#{location.Dedicn}, #{location.County}
                 br
-                span #{perf.formatDate}
+                a(href='http://bb.ringingworld.co.uk/view.php?id=' + perf.bellboard) #{perf.formatDate}
                 if perf.Hours
                     span  in #{perf.Hours}h#{perf.Minutes}
                 else if perf.Minutes

@@ -102,7 +102,6 @@ app.get '/stats', (req, res) ->
             methods[perf.Stage][title]++
 
             tower = perf.tower or perf.venue
-            unless tower? then console.log perf
 
             towers[tower.DoveID] ?= displayName: getTowerDisplayName(tower), count: 0
             towers[tower.DoveID].count++
