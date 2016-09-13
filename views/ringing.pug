@@ -40,6 +40,9 @@ html(lang="en")
 
         each perf in performances
             .col-sm-6
+                if perf.assoc
+                    b: u #{perf.assoc.toUpperCase()}
+                    br
                 - var location = perf.tower ? perf.tower : perf.venue
                 - var place2 = location.Place2 ? location.Place2 + ', ' : ''
                 b #{location.Place.toUpperCase()}, #{place2}#{location.Dedicn}, #{location.County}
@@ -51,8 +54,14 @@ html(lang="en")
                     span  in #{perf.Minutes} mins
                 +weightDescription(perf)
                 br
-                b: i #{perf.Length} #{perf.Method} #{perf.Stage}
+                b: i #{perf.Length} #{perf.Method} #{perf.stage}
                 br
+                if perf.details
+                    small #{perf.numMeth}m: #{perf.details}
+                    br
+                if perf.comp
+                    span #{perf.comp}
+                    br
                 br
                 for ringer in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
                     if perf['Ringer' + ringer]
@@ -63,8 +72,8 @@ html(lang="en")
                         if perf.Conductor == ringer
                             span  (C)
                         br
-                if perf.Footnotes
+                if perf.footnotes
                     br
-                    span(style="white-space: pre-wrap") #{perf.Footnotes}
+                    span(style="white-space: pre-wrap") #{perf.footnotes}
                 br
                 br

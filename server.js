@@ -82,8 +82,8 @@
           countQ++;
         }
         length.formatDate = Moment(length.date).format('ddd D MMMM YYYY');
-        if (lengths.Footnotes != null) {
-          lengths.formatFootnotes = lengths.Footnotes.replace('\n', '<br>');
+        if (lengths.footnotes != null) {
+          lengths.formatFootnotes = lengths.footnotes.replace('\n', '<br>');
         }
         return length;
       });
@@ -130,15 +130,12 @@
           }
           ringers[perf["Ringer" + ringer]]++;
         }
-        title = perf.Method || ("(" + perf.NumMeth + "m)");
-        if ((_base = methods[perf.Stage])[title] == null) {
+        title = perf.Method || ("(" + perf.numMeth + "m)");
+        if ((_base = methods[perf.stage])[title] == null) {
           _base[title] = 0;
         }
-        methods[perf.Stage][title]++;
+        methods[perf.stage][title]++;
         tower = perf.tower || perf.venue;
-        if (tower == null) {
-          console.log(perf);
-        }
         if (towers[_name1 = tower.DoveID] == null) {
           towers[_name1] = {
             displayName: getTowerDisplayName(tower),

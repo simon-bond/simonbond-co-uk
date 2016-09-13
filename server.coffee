@@ -69,8 +69,8 @@ app.get '/ringing', (req, res) ->
             totalRows += length.Length
             if length.Length > 4999 then countP++ else countQ++
             length.formatDate = Moment(length.date).format 'ddd D MMMM YYYY'
-            if lengths.Footnotes?
-                lengths.formatFootnotes = lengths.Footnotes.replace '\n', '<br>'
+            if lengths.footnotes?
+                lengths.formatFootnotes = lengths.footnotes.replace '\n', '<br>'
             return length
         context = req.query # pass it back for display in the filters
         context.performances = lengths
@@ -97,9 +97,9 @@ app.get '/stats', (req, res) ->
                 ringers[perf["Ringer#{ringer}"]] ?= 0
                 ringers[perf["Ringer#{ringer}"]]++
 
-            title = perf.Method or "(#{perf.NumMeth}m)"
-            methods[perf.Stage][title] ?= 0
-            methods[perf.Stage][title]++
+            title = perf.Method or "(#{perf.numMeth}m)"
+            methods[perf.stage][title] ?= 0
+            methods[perf.stage][title]++
 
             tower = perf.tower or perf.venue
 
