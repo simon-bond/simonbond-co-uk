@@ -144,6 +144,19 @@ app.get '/stats', (req, res) ->
 
         res.render 'stats', context
 
+app.get '/new', (req, res) ->
+    console.log 'new'
+    return Db.collections.towers.find({isHand: $ne: true}).sort({doveId: 1}).toArray (err, towers) ->
+        if err? then return res.status(500).send(err)
+        towers = towers.map (tower) ->
+            tower.formattedPlace = tower.place
+            if tower.place2 then tower.formattedPlace += ", #{tower.place2}"
+            tower.formattedPlace += ", #{tower.dedication}"
+            return tower
+        context = towers: towers
+
+        return res.render 'new', context
+
 getTowerDisplayName = (tower) ->
     if tower.Place2?
         return "#{tower.Place}, #{tower.Place2}, #{tower.Dedicn}, #{tower.County}"

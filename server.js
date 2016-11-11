@@ -216,6 +216,35 @@
     });
   });
 
+  app.get('/new', function(req, res) {
+    console.log('new');
+    return Db.collections.towers.find({
+      isHand: {
+        $ne: true
+      }
+    }).sort({
+      doveId: 1
+    }).toArray(function(err, towers) {
+      var context;
+      if (err != null) {
+        return res.status(500).send(err);
+      }
+      towers = towers.map(function(tower) {
+        tower.formattedPlace = tower.place;
+        if (tower.place2) {
+          tower.formattedPlace += ", " + tower.place2;
+        }
+        tower.formattedPlace += ", " + tower.dedication;
+        return tower;
+      });
+      context = {
+        towers: towers
+      };
+      console.log(JSON.stringify(towers, null, 2));
+      return res.render('new', context);
+    });
+  });
+
   getTowerDisplayName = function(tower) {
     if (tower.Place2 != null) {
       return "" + tower.Place + ", " + tower.Place2 + ", " + tower.Dedicn + ", " + tower.County;
